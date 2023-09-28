@@ -7,7 +7,7 @@ class Ship:
         self.screen = screen
 
         # загрузка изображения корабля и получение его модели
-        self.image = pg.image.load('ship.png')
+        self.image = pg.image.load('images/ship.png')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         # каждый корабль появляется у нижнего края экрана

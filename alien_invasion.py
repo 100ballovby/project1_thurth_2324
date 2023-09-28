@@ -2,6 +2,7 @@ import sys
 import pygame as pg
 from settings import Settings
 from ship import Ship
+import game_functions as gf
 
 
 def run_game(window_name):
@@ -13,12 +14,8 @@ def run_game(window_name):
 
     ship = Ship(screen)
     while True:
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                sys.exit()
-        screen.fill(ai_settings.bg_color)
-        ship.blitme()
-        pg.display.flip()
+        gf.check_events()  # отслеживание событий мыши и клавиатуры
+        gf.update_screen(ai_settings, screen, ship)
 
 
 run_game('Alien invasion game')
