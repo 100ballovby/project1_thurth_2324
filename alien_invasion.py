@@ -11,9 +11,10 @@ def run_game(window_name):
                                   ai_settings.screen_height))
     pg.display.set_caption(window_name)
 
-    ship = Ship(screen)
+    ship = Ship(ai_settings, screen)
     while True:
-        gf.check_events()  # отслеживание событий мыши и клавиатуры
+        gf.check_events(ship)  # отслеживание событий мыши и клавиатуры
+        ship.update()  # постоянное опрашивает экземпляр класса Ship
         gf.update_screen(ai_settings, screen, ship)
 
 
