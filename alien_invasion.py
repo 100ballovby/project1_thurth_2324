@@ -18,10 +18,7 @@ def run_game(window_name):
         gf.check_events(ai_settings, screen, ship, bullets)  # отслеживание событий мыши и клавиатуры
         ship.update()  # постоянное опрашивает экземпляр класса Ship
         bullets.update()
-        # удаление пуль, вышедших за пределы экрана
-        for bullet in bullets.copy():
-            if bullet.rect.bottom <= 0:  # если пуля вышла за пределы экрана
-                bullets.remove(bullet)
+        gf.update_bullets(bullets)
         gf.update_screen(ai_settings, screen, ship, bullets)
 
 
