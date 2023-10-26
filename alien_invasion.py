@@ -21,7 +21,7 @@ def run_game(window_name):
         gf.check_events(ai_settings, screen, ship, bullets)  # отслеживание событий мыши и клавиатуры
         ship.update()  # постоянное опрашивает экземпляр класса Ship
         bullets.update()
-        gf.update_bullets(bullets)
+        gf.update_bullets(bullets, aliens, ai_settings, screen, ship)
         gf.update_alien(ai_settings, aliens)
         gf.update_screen(ai_settings, screen, ship, bullets, aliens)
 

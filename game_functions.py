@@ -50,11 +50,18 @@ def update_screen(settings, screen, ship, bullets, aliens):
     pg.display.flip()
 
 
-def update_bullets(bullets):
+def update_bullets(bullets, aliens, settings, screen, ship):
     # удаление пуль, вышедших за пределы экрана
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:  # если пуля вышла за пределы экрана
             bullets.remove(bullet)
+
+    """Обнаружение попадания в пришельца"""
+    collisions = pg.sprite.groupcollide(bullets, aliens, True, True)
+    if len(aliens) == 0:
+        # уничтожаем существующие пули и добавляем новый флот
+        bullets.empty()
+        create_fleet(settings, screen, aliens, ship)
 
 
 def fire_bullet(ai_settings, screen, ship, bullets):
