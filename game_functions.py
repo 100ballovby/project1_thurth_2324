@@ -2,6 +2,7 @@ import sys
 import pygame as pg
 from bullet import Bullet
 from alien import Alien
+from time import sleep
 
 
 def check_keydown_events(event, ai_settings, screen, ship, bullets):
@@ -111,10 +112,14 @@ def create_fleet(settings, screen, aliens, ship):
             create_alien(settings, screen, aliens, alien_number, row_number)
 
 
-def update_alien(settings, aliens):
+def update_alien(settings, aliens, ship, stats, screen, bullets):
     """Перемещение пришельцев"""
     check_fleet_edges(settings, aliens)
     aliens.update()
+
+    if pg.sprite.spritecollideany(ship, aliens):
+        ship_hit(settings, stats, screen, ship, aliens, bullets)
+    check_aliens_bottom(settings, stats, screen, ship, aliens, bullets)
 
 
 def check_fleet_edges(settings, aliens):
@@ -130,3 +135,30 @@ def change_fleet_direction(settings, aliens):
     for alien in aliens.sprites():
         alien.rect.y += settings.fleet_drop_speed
     settings.fleet_direction *= -1
+
+
+def ship_hit(settings, stat, screen, ship, aliens, bullets):
+    """Обрабатываем столкновения пришельцев с кораблем"""
+    if stat.ships_left > 0:
+        stat.ships_left -= 1  # уменьшаем количество кораблей
+        # убираем пули и пришельцев
+        aliens.empty()
+        bullets.empty()
+        # создаем флот и центруем корабль
+        create_fleet(settings, screen, aliens, ship)
+        ship.center_ship()
+
+        # пауза 0.5 секунды
+        sleep(0.5)
+    else:
+        stat.game_active = False
+
+
+def check_aliens_bottom(settings, stats, screen, ship, aliens, bullets):
+    """Проверяет, достигли ли пришельцы нижнего края экрана"""
+    screen_rect = screen.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom >= screen_rect.bottom:
+            # происходит то же самое, что и при столкновении с кораблем
+            ship_hit(settings, stats, screen, ship, aliens, bullets)
+            break
