@@ -100,3 +100,7 @@ def create_fleet(settings, screen, aliens, ship):
             # создание пришельца и размещение его в ряду
             create_alien(settings, screen, aliens, alien_number, row_number)
 
+
+def update_alien(aliens):
+    """Перемещение пришельцев"""
+    aliens.update()

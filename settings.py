@@ -14,4 +14,7 @@ class Settings:
         self.bullet_color = (210, 87, 247)
         self.bullets_allowed = 3
 
+        # параметры флота
+        self.alien_speed_factor = 1
+
 

@@ -22,6 +22,7 @@ def run_game(window_name):
         ship.update()  # постоянное опрашивает экземпляр класса Ship
         bullets.update()
         gf.update_bullets(bullets)
+        gf.update_alien(aliens)
         gf.update_screen(ai_settings, screen, ship, bullets, aliens)
 
 
