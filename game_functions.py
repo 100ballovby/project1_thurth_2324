@@ -66,6 +66,7 @@ def check_bullet_alien_collisions(settings, screen, ship, aliens, bullets):
         bullets.empty()
         create_fleet(settings, screen, aliens, ship)
 
+
 def fire_bullet(ai_settings, screen, ship, bullets):
     # создаем новую пулю и добавляем ее в группу с пулями
     if len(bullets) < ai_settings.bullets_allowed:
