@@ -55,14 +55,16 @@ def update_bullets(bullets, aliens, settings, screen, ship):
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:  # если пуля вышла за пределы экрана
             bullets.remove(bullet)
+    check_bullet_alien_collisions(settings, screen, ship, aliens, bullets)
 
+
+def check_bullet_alien_collisions(settings, screen, ship, aliens, bullets):
     """Обнаружение попадания в пришельца"""
     collisions = pg.sprite.groupcollide(bullets, aliens, True, True)
     if len(aliens) == 0:
         # уничтожаем существующие пули и добавляем новый флот
         bullets.empty()
         create_fleet(settings, screen, aliens, ship)
-
 
 def fire_bullet(ai_settings, screen, ship, bullets):
     # создаем новую пулю и добавляем ее в группу с пулями
