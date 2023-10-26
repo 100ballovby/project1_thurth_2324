@@ -101,6 +101,22 @@ def create_fleet(settings, screen, aliens, ship):
             create_alien(settings, screen, aliens, alien_number, row_number)
 
 
-def update_alien(aliens):
+def update_alien(settings, aliens):
     """Перемещение пришельцев"""
+    check_fleet_edges(settings, aliens)
     aliens.update()
+
+
+def check_fleet_edges(settings, aliens):
+    """Реагирует на достижение пришельцем края экрана"""
+    for alien in aliens.sprites():
+        if alien.check_edges():
+            change_fleet_direction(settings, aliens)
+            break
+
+
+def change_fleet_direction(settings, aliens):
+    """Опускает флот и меняет направление"""
+    for alien in aliens.sprites():
+        alien.rect.y += settings.fleet_drop_speed
+    settings.fleet_direction *= -1
