@@ -3,7 +3,7 @@ class GameStats:
     def __init__(self, settings):
         """Инициализация статистики"""
         self.settings = settings
-        self.game_active = True  # игра изначально активна
+        self.game_active = False  # игра изначально запускается в неактивном состоянии
         self.reset_stats()
 
     def reset_stats(self):

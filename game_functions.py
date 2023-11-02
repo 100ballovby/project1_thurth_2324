@@ -32,7 +32,7 @@ def check_keyup_events(event, ship):
         ship.moving_down = False
 
 
-def check_events(ai_settings, screen, ship, bullets):
+def check_events(ai_settings, screen, ship, bullets, stats, play_button, aliens):
     for event in pg.event.get():
         if event.type == pg.QUIT:
             sys.exit()
@@ -40,14 +40,34 @@ def check_events(ai_settings, screen, ship, bullets):
             check_keydown_events(event, ai_settings, screen, ship, bullets)
         elif event.type == pg.KEYUP:
             check_keyup_events(event, ship)
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pg.mouse.get_pos()
+            check_play_button(stats, play_button, mouse_x, mouse_y, ai_settings, screen, ship, aliens, bullets)
 
 
-def update_screen(settings, screen, ship, bullets, aliens):
+def check_play_button(stats, play_button, mouse_x, mouse_y, settings, screen, ship, aliens, bullets):
+    """Запускает игру по нажатию кнопки Play"""
+    if play_button.rect.collidepoint(mouse_x, mouse_y):
+        stats.reset_stats()
+        stats.game_active = True
+
+        aliens.empty()
+        bullets.empty()
+
+        create_fleet(settings, screen, aliens, ship)
+        ship.center_ship()
+
+
+def update_screen(settings, screen, ship, bullets, aliens, stats, play_button):
     screen.fill(settings.bg_color)
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     ship.blitme()
     aliens.draw(screen)
+
+    if not stats.game_active:
+        play_button.draw_button()
+
     pg.display.flip()
 
 
