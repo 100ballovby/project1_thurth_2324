@@ -47,7 +47,9 @@ def check_events(ai_settings, screen, ship, bullets, stats, play_button, aliens)
 
 def check_play_button(stats, play_button, mouse_x, mouse_y, settings, screen, ship, aliens, bullets):
     """Запускает игру по нажатию кнопки Play"""
-    if play_button.rect.collidepoint(mouse_x, mouse_y):
+    button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
+    if button_clicked and not stats.game_active:
+        pg.mouse.set_visible(False)  # выключить курсор мыши
         stats.reset_stats()
         stats.game_active = True
 
@@ -172,6 +174,7 @@ def ship_hit(settings, stat, screen, ship, aliens, bullets):
         sleep(0.5)
     else:
         stat.game_active = False
+        pg.mouse.set_visible(True)
 
 
 def check_aliens_bottom(settings, stats, screen, ship, aliens, bullets):
