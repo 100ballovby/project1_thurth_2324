@@ -49,6 +49,7 @@ def check_play_button(stats, play_button, mouse_x, mouse_y, settings, screen, sh
     """Запускает игру по нажатию кнопки Play"""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
+        settings.initialize_dynamic_settings()  # сброс настроек скорости в дефолтное состояние
         pg.mouse.set_visible(False)  # выключить курсор мыши
         stats.reset_stats()
         stats.game_active = True
@@ -87,6 +88,7 @@ def check_bullet_alien_collisions(settings, screen, ship, aliens, bullets):
     if len(aliens) == 0:
         # уничтожаем существующие пули и добавляем новый флот
         bullets.empty()
+        settings.increase_speed()  # увеличиваем скорость ВСЕГО
         create_fleet(settings, screen, aliens, ship)
 
 
